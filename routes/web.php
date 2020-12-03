@@ -24,14 +24,14 @@ Route::group(['middleware' => 'auth'], function () {
 
 Route::get('/home', 'HomeController@index')->name('content');
 
-//create users
+//create user
 Route::get('/create', 'StudentsController@create')->name('info.create');
-
-//show users
-Route::get('home/{id}/show/', 'StudentsController@show')->name('info.info');
 
 //add user
 Route::post('/create', 'StudentsController@store');
+
+//show user
+Route::get('home/{id}/show/', 'StudentsController@show')->name('info.info');
 
 //add Table
 Route::get('/home/{id}/add', 'StudentsController@add')->name('info.add_table');

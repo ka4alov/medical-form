@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\MedicalForm;
 use Illuminate\Http\Request;
 use App\Student;
 use App\Info;
@@ -17,26 +18,10 @@ class StudentsController extends Controller
 
     //Create users
 
-    public function store(Request $request)
+    public function store(MedicalForm $request)
     {
-        $request->validate([
-            'last_name' => 'required',
-            'name' => 'required',
-            'so_name' => 'required',
-            'birthday' => 'required',
-            'adress' => 'required',
-            'view' => 'required|nullable',
-            'age'=> 'required|min:1|max:2',
-            'date'=> 'required|date',
-            'doza'=> 'required|min:1|max:3',
-            'seria'=> 'required|nullable',
-            'reakcia'=> 'required|nullable',
-            'info'=> 'required|nullable'
-
-
-
-        ]);
-
+        $request->validate();
+            
         $student = Student::create($request->all());
 
         $student->info()->create($request->only('view', 'age', 'date', 'doza', 'seria', 'reakcia', 'info'));
@@ -91,18 +76,10 @@ class StudentsController extends Controller
             return abort(404);
         }
 
-        $request->validate([
-
-            'view' => 'required',
-            'age' => 'required',
-            'date' => 'nullable|date',
-            'doza' => 'required',
-            'seria' => 'required',
-            'reakcia' => 'required',
-            'info' => 'required'
-        ]);
+        $request->validate();
 
         $student->info()->create($request->only('view', 'age', 'date', 'doza', 'seria', 'reakcia', 'info'));
+
         return redirect()->route('info.edit', compact('student'))->with('message', 'Таблица добавленна');
     }
 
@@ -110,15 +87,10 @@ class StudentsController extends Controller
 
     public function update(Request $request, $id)
     {
-        $request->validate([
-            'last_name' => 'required',
-            'name' => 'required',
-            'so_name' => 'required',
-            'birthday' => 'required',
-            'adress' => 'required'
-        ]);
+        $request->validate();
 
         $student = Student::find($id);
+
         $student->update($request->all());
 
         return redirect()->route('content')
@@ -131,6 +103,7 @@ class StudentsController extends Controller
     {
         $student = Student::find($id);
         $student->delete();
+
         return redirect()->route('content', $student)->with('delete', 'Карточка успешно удалена!');
     }
 }

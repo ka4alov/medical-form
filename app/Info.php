@@ -8,7 +8,13 @@ use Illuminate\Database\Eloquent\Model;
 class Info extends Model
 {
     protected $fillable = [
-        'view', 'age', 'date', 'doza', 'seria', 'reakcia', 'info'
+        'view', 
+        'age', 
+        'date', 
+        'doza', 
+        'seria', 
+        'reakcia', 
+        'info'
     ];
    
     public function student(){
